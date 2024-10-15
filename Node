@@ -1,0 +1,17 @@
+public class Node{
+
+Node next;
+int co;//
+int pow;//
+
+    public Node(int co,int pow) {
+     this.co = co;
+     this.pow = pow;
+    }
+
+
+
+
+    
+    
+}

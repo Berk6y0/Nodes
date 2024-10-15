@@ -1,0 +1,196 @@
+public class StackArray {
+
+    String data[];
+    int top;
+
+    public StackArray(int N) {
+        data = new String[N];
+        top = -1;
+
+    }
+
+    public void push(String element) {
+        if (!isFull()) {
+            top++;
+            data[top] = element;
+
+        } else {
+            throw new java.lang.ArrayIndexOutOfBoundsException();
+        }
+
+    }
+
+    public String pop() {
+        if (!isEmpty()) {
+            top--;
+
+            return data[top + 1];
+        } else {
+
+            throw new java.util.NoSuchElementException();
+
+        }
+    }
+
+    public boolean isFull() {
+        if (top == data.length - 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEmpty() {
+        if (top == -1) {
+            return true;
+        }
+        return false;
+    }
+  
+
+    void isPalindrome() {   
+        int length = top; //I have given this value to show the last element in the  stack
+        int a = 0;//if a increases in our loop, it shows that the string values are not equal
+        int i = 0;// I have given this value to show the first element in the  stack
+        while (i < top) {
+
+            String first = data[i];
+            String last = data[length];
+
+            if (length >= i) {
+                if (!first.equals(last)) {
+                    a++;//If equality is not achieved in this statement, We increased a
+                }
+            }
+            i++;// here we increased one and decreased the other to check it till the middle of the stack
+            length--;
+        }
+
+        if (a == 0) {
+            System.out.println();
+            System.out.println("The Stack is palindrome.");
+        } else {
+            System.out.println();
+            System.out.println("The Stack is not palindrome.");
+        }
+
+    }
+
+    void print() {
+        int i = -1;
+        while (i < top) {//loop until to top because I didn't want nulls to be printed
+            i++;
+            System.out.print(data[i] + " ");
+            if (top == data.length) {
+                throw new java.util.NoSuchElementException();
+            }
+        }
+
+    }
+
+    public void deleteMiddle(StackArray s1, StackArray s2) {
+        //s2 is temporary stack
+        int a = -1; //shows how many values will be deleted until the middle
+        String b = null;
+       
+
+        if ((top + 1) % 2 == 1) {
+            //if Stack is odd that will be worked
+            int middle = top;
+
+            int i = 0;
+            while (i <= middle) {
+
+                if (i != middle) {
+                    b = s1.pop();//We are popping from the stack here
+                    s2.push(b);// after that we pushed them the temporary stack
+                    a++;
+
+                }
+                if (i == middle) {//when in the middle
+                    s1.pop();//we popped the middle
+                    while (a > -1) {
+                        s1.push(b);//later that there we pushed value of temporary stack to main stack
+                        if (s2.top == 0) {
+                            b = s2.pop();
+                        } else if (s2.top > 0) {
+                            s2.pop();
+                            b = s2.pop();
+                            s2.push(b);
+                        }
+
+                        a--;
+                    }
+                }
+                i++;
+                middle--;
+            }
+
+        } else {
+                
+            throw new java.util.NoSuchElementException("There is no middle element as the size of stack is even.");
+        }
+    }
+
+    public static void main(String[] args) {
+        StackArray s1 = new StackArray(100);
+        StackArray s2 = new StackArray(100);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Which task you want to do");
+        System.out.println("");
+        System.out.println("1- push");
+        System.out.println("2- pop");
+        System.out.println("3- Print");
+        System.out.println("4- Delete middle");
+        System.out.println("5- isPalindrome");
+        System.out.println("6- exit");
+        System.out.println("Please enter a digit(1-5):");
+        int a = 0;
+        while (a < 6) {
+            a = scanner.nextInt();
+        
+
+        switch (a) {
+            case 1:
+                System.out.println("How many pushes you want to do?");
+                int x = scanner.nextInt();
+                System.out.println("Enter " + x + " Strings:");
+                while (x > 0) {
+                    String u = scanner.next();
+                    s1.push(u);
+                    x--;
+                }
+                System.out.println("Please enter a digit(1-5):");
+
+                break;
+            case 2:
+                String b = s1.pop();
+
+                System.out.println(b + " is deleted.");
+                System.out.println("Please enter a digit(1-5):");
+
+                break;
+            case 3:
+                System.out.println("The content of stack is:");
+                s1.print();
+                System.out.println("");
+                System.out.println("Please enter a digit(1-5):");
+
+                break;
+            case 4:
+                System.out.println("Middle of the stack is deleting");
+                s1.deleteMiddle(s1, s2);
+                System.out.println("Please enter a digit(1-5):");
+
+                break;
+            case 5:
+                s1.isPalindrome();
+                System.out.println("Please enter a digit(1-5):");
+
+                break;
+            case 6:
+                System.out.println("Exiting");
+                break;
+        }
+    }
+    }
+}
